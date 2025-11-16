@@ -3,6 +3,12 @@
     const mapToken = "<%= process.env.MAP_TOKEN %>";
     const listing = <%- JSON.stringify(listing) %>;
 </script>
+<style>
+    #map {
+        max-width: -webkit-fill-available;
+        height: 400px;
+    }
+</style>
     <div class="row mt-3">
         <div class="col-8 offset-3">
 
