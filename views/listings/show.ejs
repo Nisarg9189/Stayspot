@@ -8,6 +8,39 @@
         max-width: -webkit-fill-available;
         height: 400px;
     }
+
+    .rating {
+        min-width: max-content;
+    }
+
+    .edit-btn {
+        min-width: fit-content;
+    }
+
+    .btns {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    @media (max-width: 350px) {
+        .card-text {
+            display: none;
+        }
+
+        .starability-slot {
+            width:-webkit-fill-available;
+        }
+    }
+
+    @media (max-width: 222px) {
+        .edit-btn {
+            margin: 1.6rem;
+        }
+
+        .btns {
+            margin-left: 1.5rem;
+        }
+    }
 </style>
     <div class="row mt-3">
         <div class="col-8 offset-3">
@@ -101,7 +134,7 @@
                         <div class="row">
                              <p><b>All Reviews</b></p>
                             <% for(let review of listing.reviews) { %>
-                                <div class="card col-5 ms-3 mb-3">
+                                <div class="card col-5 ms-3 mb-3 rating">
                                     <div class="card-body">
                                         <h5 class="card-title">@<%= review.author.username %>
                                         </h5>
