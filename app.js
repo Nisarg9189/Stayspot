@@ -123,7 +123,7 @@ app.post("/ask", async (req, res) => {
         let answer = data?.choices?.[0]?.message?.content?.trim() || "";
         answer = stripMarkdownBold(answer);
         res.json({
-            answer: answer || "Please consult a doctor for professional medical advice."
+            answer: answer || "I can't find"
         });
 
     } catch (error) {
