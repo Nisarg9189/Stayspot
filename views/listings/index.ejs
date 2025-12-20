@@ -9,8 +9,7 @@
 
         .filter {
             text-align: center;
-            margin-right: 2rem;
-            margin-top: 2rem;
+            padding: 1rem;
             opacity: 0.7;
         }
 
@@ -23,7 +22,7 @@
             font-size: 0.8rem;
         }
 
-        .tax-info{
+        .tax-info {
             display: none;
         }
 
@@ -35,6 +34,7 @@
             margin-left: 2rem;
             display: flex;
             align-items: center;
+            margin-bottom: 1rem;
         }
 
         @media (max-width: 390px) {
@@ -42,6 +42,7 @@
                 margin: 0;
             }
         }
+
         @media (max-width: 375px) {
             #filters {
                 display: none;
@@ -61,7 +62,8 @@
             <p>Rooms</p>
         </div>
         <div class="filter">
-            <div data-filter="iconic cities" onclick="handleFilter(this)"><i class="fa-solid fa-mountain-city"></i></div>
+            <div data-filter="iconic cities" onclick="handleFilter(this)"><i class="fa-solid fa-mountain-city"></i>
+            </div>
             <p>Iconic Cities</p>
         </div>
 
@@ -75,7 +77,8 @@
         </div>
 
         <div class="filter">
-            <div data-filter="amazing pools" onclick="handleFilter(this)"><i class="fa-solid fa-person-swimming"></i></div>
+            <div data-filter="amazing pools" onclick="handleFilter(this)"><i class="fa-solid fa-person-swimming"></i>
+            </div>
             <p>Amazing Pools</p>
         </div>
         <div class="filter">
@@ -109,30 +112,46 @@
         </div>
     </div>
 
+    <div class="div">
+        <!-- AI Travel Assistant -->
+        <div class="flex-1 w-full bg-white shadow-md rounded-xl mt-2">
+
+            <form id="aiForm" class="d-flex gap-2">
+                <input type="text" placeholder="Ask about listings, destinations, or tips..." id="aiQuestion"
+                    class="form-control" />
+                <button type="submit" class="btn btn-primary">Ask</button>
+            </form>
+
+            <div id="aiAnswer" class="mt-3 p-3 bg-light border rounded" style="display:none;"></div>
+        </div>
+    </div>
+
     <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1 mt-3">
-        <% if (allListings.length === 0) { %>
-            <h3>No listings found 😢</h3>
-        <% } %>
-        
-        <% for (let list of allListings) { %>
-            <a href="/listing/<%= list._id %>" class="listing-link">
-                <div class="card col listing-card">
-                    <img src="<%= list.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
-                    <div class="card-img-overlay"></div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            <b>
-                                <%= list.title %> 
-                            </b><br>
-                            <i>Types :<%= list.types ? list.types : "Not mention" %></i>
-                             </b><br>
-                            &#8377; <%= list.price.toLocaleString("en-IN") %> / night
-                            <i class="tax-info">&nbsp;+&nbsp;18% GST</i>
-                        </p>
-                    </div>
-                </div>
-            </a>
+
+        <% if (allListings.length===0) { %>
+            <h3>No listings found</h3>
             <% } %>
+
+                <% for (let list of allListings) { %>
+                    <a href="/listing/<%= list._id %>" class="listing-link">
+                        <div class="card col listing-card">
+                            <img src="<%= list.image.url %>" class="card-img-top" alt="listing_image"
+                                style="height: 20rem;">
+                            <div class="card-img-overlay"></div>
+                            <div class="card-body">
+                                <p class="card-text">
+                                    <b>
+                                        <%= list.title %>
+                                    </b><br>
+                                    <i>Types :<%= list.types ? list.types : "Not mention" %></i>
+                                    </b><br>
+                                    &#8377; <%= list.price.toLocaleString("en-IN") %> / night
+                                        <i class="tax-info">&nbsp;+&nbsp;18% GST</i>
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                    <% } %>
     </div>
 
     <script>
@@ -141,8 +160,8 @@
         taxSwitch.addEventListener("click", () => {
             let taxInfo = document.getElementsByClassName("tax-info");
 
-            for(info of taxInfo) {
-                if(info.style.display != "inline") {
+            for (info of taxInfo) {
+                if (info.style.display != "inline") {
                     info.style.display = "inline";
                 } else {
                     info.style.display = "none";
@@ -155,4 +174,29 @@
             //console.log(filter);    
             window.location.href = `/listings/filter/${filter}`;
         }
+
+
+        document.getElementById("aiForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const question = document.getElementById("aiQuestion").value;
+            const answerDiv = document.getElementById("aiAnswer");
+            answerDiv.style.display = "block";
+            answerDiv.innerHTML = "AI is thinking...";
+            try {
+                const res = await fetch("/ask", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ question })
+                });
+
+                const data = await res.json();
+                answerDiv.innerHTML = data.answer || "Sorry, I couldn't generate a response.";
+            } catch (err) {
+                answerDiv.innerHTML = "Error connecting to AI service.";
+                console.error(err);
+            }
+        });
+
+
     </script>

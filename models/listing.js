@@ -39,7 +39,7 @@ const listingSchema = new Schema({
         ref: "User"
     },
 
-    geometry: {
+    geometry: { // GeoJSON Format
         type: {
             type: String,
             enum: ["Point"],
