@@ -97,7 +97,7 @@ app.post("/ask", async (req, res) => {
                 },
                 body: JSON.stringify({
                     model: "openrouter/auto",
-                    max_tokens: 100,
+                    max_tokens: 250,
                     temperature: 0.7,
                     messages: [
                         {
