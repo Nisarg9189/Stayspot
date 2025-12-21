@@ -1,4 +1,4 @@
-# Stayspot - Airbnb Clone
+# Stayspot
 
 A full-stack web application for listing and booking accommodations, built with Node.js, Express, EJS, MongoDB, and Mapbox. Users can create listings, write reviews, and explore stays in an interactive map-based interface.
 
