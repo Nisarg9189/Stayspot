@@ -12,6 +12,7 @@ A full-stack web application for listing and booking accommodations, built with 
 - **Session Management**: Express sessions with connect-flash for notifications
 - **Data Validation**: Joi schema validation for client and server-side validation
 - **Responsive Design**: Mobile-friendly UI with custom CSS styling
+- **AI Travel Assistant**: Get personalized travel planning tips and accommodation advice using OpenRouter AI
 
 ## 🛠️ Tech Stack
 
@@ -32,6 +33,7 @@ A full-stack web application for listing and booking accommodations, built with 
 ### Other Services
 - **Image Storage**: Cloudinary
 - **Location Services**: Mapbox
+- **AI API**: OpenRouter (for travel planning assistant)
 
 ## 📦 Dependencies
 
@@ -87,6 +89,8 @@ A full-stack web application for listing and booking accommodations, built with 
    MAPBOX_TOKEN=your_mapbox_token
    MONGODB_URI=your_mongodb_connection_string
    SESSION_SECRET=your_session_secret
+   OPENROUTER_API_KEY=your_openrouter_api_key
+   NODE_ENV=development
    ```
 
 4. **Initialize database**
@@ -175,6 +179,9 @@ The application will run on `http://localhost:8080`
 - `POST /listing/:id/review` - Add review to listing
 - `DELETE /listing/:id/review/:reviewId` - Delete review
 
+### AI Assistant Routes
+- `POST /ask` - Get travel planning tips and advice from AI assistant
+
 ## 💾 Database Models
 
 ### User
@@ -200,6 +207,17 @@ The application will run on `http://localhost:8080`
 - Author (User reference)
 - Listing (Listing reference)
 
+## 🤖 AI Travel Assistant
+
+The application includes an intelligent travel assistant powered by OpenRouter AI that provides:
+- Personalized travel planning tips
+- Accommodation recommendations
+- Information about amenities and locations
+- Activity and experience suggestions
+- Travel safety and planning advice
+
+The AI is specifically trained as a travel assistant and provides guidance while advising users to confirm details before booking.
+
 ## 🔒 Security Features
 
 - Passport.js for authentication
@@ -208,3 +226,4 @@ The application will run on `http://localhost:8080`
 - CSRF protection through method-override
 - Input validation with Joi schemas
 - Cloudinary secure image uploads
+- Secure API calls to external services (OpenRouter, Cloudinary, Mapbox)
